@@ -1,0 +1,2 @@
+# CoinStatsSetting
+WhattomineのSolarisのデータ取得する際に価格の情報が取れないので取得して設定します。
