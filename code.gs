@@ -34,13 +34,13 @@ function getCoeMarketInfo(coin1, coin2, contents){
     var marketsUrl = "https://www.coinexchange.io/api/v1/getmarkets";
     var summaryUrl = "https://www.coinexchange.io/api/v1/getmarketsummary?market_id=";
     
-    var marketsJson = send_get(marketsUrl);
+    var marketsJson = getJson(marketsUrl);
     
     var matchData = marketsJson.result.filter(function(item, index){
       if (item.MarketAssetCode == coin1 && item.BaseCurrencyCode == coin2) return true;
     });
     
-    var json2 = send_get(summaryUrl + matchData[0].MarketID);
+    var json2 = getJson(summaryUrl + matchData[0].MarketID);
     return  Number(json2.result[contents]);
   }
   catch(e){
