@@ -10,8 +10,6 @@ function getJson(url) {
 
 
 function doGet(){
-  // whattomineのjsonを取得
-  var coinJson = getJson(url);
   
   // 採掘難易度を取得します。
   var diff = getYtnDiff();
@@ -20,16 +18,11 @@ function doGet(){
   var price = getSEMarketInfo("YTN", "BTC", "buy");
   
   // whattomine形式のjson作成
-  var ytnJson = '{"id":999,"name":"Yenten","tag":"YTN","algorithm":"YescryptR16","block_time":"120.0","block_reward":50,"block_reward24":50"block_reward3":50,"block_reward7":50,"last_block":141606,"difficulty":' + diff + ',"difficulty24":' + diff + ',"difficulty3":' + diff + ',"difficulty7":' + diff + ',"nethash":17285206474,"exchange_rate":' + price + ',"exchange_rate24":' + price + ',"exchange_rate3":' + price + ',"exchange_rate7":' + price + ',"exchange_rate_vol":0,"exchange_rate_curr":"BTC","market_cap":"$0","pool_fee":"0.000000","estimated_rewards":"13.734687","btc_revenue":"0.00000000","revenue":"$0.00","cost":"$0.36","profit":"-$0.36","status":"Active","lagging":false,"timestamp":1516433084}';
+  var ytnJson = '{\"id\":999,\"name\":\"Yenten\",\"tag\":\"YTN\",\"algorithm\":\"YescryptR16\",\"block_time\":\"120.0\",\"block_reward\":50,\"block_reward24\":50,\"block_reward3\":50,\"block_reward7\":50,\"last_block\":141606,\"difficulty\":' + diff + ',\"difficulty24\":' + diff + ',\"difficulty3\":' + diff + ',\"difficulty7\":' + diff + ',\"nethash\":17285206474,\"exchange_rate\":' + price + ',\"exchange_rate24\":' + price + ',\"exchange_rate3\":' + price + ',\"exchange_rate7\":' + price + ',\"exchange_rate_vol\":0,\"exchange_rate_curr\":\"BTC\",\"market_cap\":\"$0\",\"pool_fee\":\"0.000000\",\"estimated_rewards\":\"13.734687\",\"btc_revenue\":\"0.00000000\",\"revenue\":\"$0.00\",\"cost\":\"$0.36\",\"profit\":\"-$0.36\",\"status\":\"Active\",\"lagging\":false,\"timestamp\":1516433084}';
   
   // 設定したjsonを出力します
-  return ContentService.createTextOutput(JSON.stringify(ytnJson)).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(ytnJson).setMimeType(ContentService.MimeType.JSON);
 }
-
-
-
-
-
 
 //1.    buy (highest buy)
 //2.    sell (lowest sell)
@@ -66,4 +59,3 @@ function getYtnDiff(){
     return 0;
   }
 }
-
