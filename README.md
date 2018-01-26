@@ -1,8 +1,6 @@
 # CoinStatsSetting
-WhattomineのSolarisのjsonデータを取得し、CoinExchangeから取得した価格情報を追加して出力するスクリプトです。
-
-Awesome MinerではWhattomineから取得した情報を元に収益予想ができますが、SolarisはCoinExchangeでしか扱っていないためwhattomineでは価格情報が取得できません。
-このスクリプトではCoinExchangeから価格を取得し、元のjsonに追加して出力します。
+仮想通貨の情報をWhatToMineのjson形式に加工し、出力するスクリプトです。
+AwesomeMinerでこのスクリプトを使用し、収益予測やプール切り替えを行うことができます。
 
 これを使うためにはGoogle Apps ScriptでStandalone Scriptを作成し、このスクリプトを貼り付け、Webアプリとして公開してください。WebアプリのURLをAwesome MinerのOptionのStatisticsのAdditional Json URLに追加します。
 
