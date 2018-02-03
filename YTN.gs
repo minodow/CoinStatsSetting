@@ -24,6 +24,11 @@ function doGet(){
   return ContentService.createTextOutput(ytnJson).setMimeType(ContentService.MimeType.JSON);
 }
 
+
+
+
+
+
 //1.    buy (highest buy)
 //2.    sell (lowest sell)
 //3.    market name
@@ -48,11 +53,17 @@ function getSEMarketInfo(coin1, coin2, contents){
 
 // YTNのDIFFを取得します。
 function getYtnDiff(){
-    try{
+  try{
     var url = "http://yenten-blockexplorer.chocottokozukai.click/api/getdifficulty";
     
-    var json = getJson(url);
-    
+    var url2 = "http://explorer.yenten.lolpool.club/api/getdifficulty";
+    var json;
+    try{
+      json = getJson(url);
+    }
+    catch(e){
+      json = getJson(url2);
+    }
     return Number(json);
   }
   catch(e){
