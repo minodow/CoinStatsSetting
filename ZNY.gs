@@ -10,7 +10,7 @@ function getJson(url) {
 
 
 function doGet(){
-  var blockReward;
+  var blockReward = 250;
   
   // 採掘難易度を取得します。
   var diff = getZenyDiff();
@@ -18,24 +18,17 @@ function doGet(){
   // ブロック数を取得します。
   var blockCount = getZenyBlockCount();
   
-  if(blockCount < 500000){
-    blockReward = 250;
-  }
-  else if(blockCount < 1000000){
-    blockReward = 125;
-  }
-  else if(blockCount < 1500000){
-    blockReward = 62.5;
-  }
-  else{
-    blockReward = 31.25;
+  var step;
+  
+  for (step = 0; step < Math.floor(blockCount / 500000); step++) {
+    blockReward = blockReward / 2;
   }
   
   // 価格を取得します。
   var price = getSEMarketInfo("ZNY", "BTC", "buy");
   
   // whattomine形式のjson作成
-  var ZenyJson = '{\"id\":999,\"name\":\"BitZeny\",\"tag\":\"ZNY\",\"algorithm\":\"Yescrypt\",\"block_time\":\"90.0\",\"block_reward\":' + blockReward + ',\"block_reward24\":' + blockReward + ',\"block_reward3\":' + blockReward + ',\"block_reward7\":' + blockReward + ',\"last_block\":' + blockCount + ',\"difficulty\":' + diff + ',\"difficulty24\":' + diff + ',\"difficulty3\":' + diff + ',\"difficulty7\":' + diff + ',\"nethash\":17285206474,\"exchange_rate\":' + price + ',\"exchange_rate24\":' + price + ',\"exchange_rate3\":' + price + ',\"exchange_rate7\":' + price + ',\"exchange_rate_vol\":0,\"exchange_rate_curr\":\"BTC\",\"market_cap\":\"$0\",\"pool_fee\":\"0.000000\",\"estimated_rewards\":\"13.734687\",\"btc_revenue\":\"0.00000000\",\"revenue\":\"$0.00\",\"cost\":\"$0.36\",\"profit\":\"-$0.36\",\"status\":\"Active\",\"lagging\":false,\"timestamp\":1516433084}';
+  var ZenyJson = '{\"id\":998,\"name\":\"BitZeny\",\"tag\":\"ZNY\",\"algorithm\":\"Yescrypt\",\"block_time\":\"90.0\",\"block_reward\":' + blockReward + ',\"block_reward24\":' + blockReward + ',\"block_reward3\":' + blockReward + ',\"block_reward7\":' + blockReward + ',\"last_block\":' + blockCount + ',\"difficulty\":' + diff + ',\"difficulty24\":' + diff + ',\"difficulty3\":' + diff + ',\"difficulty7\":' + diff + ',\"nethash\":17285206474,\"exchange_rate\":' + price + ',\"exchange_rate24\":' + price + ',\"exchange_rate3\":' + price + ',\"exchange_rate7\":' + price + ',\"exchange_rate_vol\":0,\"exchange_rate_curr\":\"BTC\",\"market_cap\":\"$0\",\"pool_fee\":\"0.000000\",\"estimated_rewards\":\"13.734687\",\"btc_revenue\":\"0.00000000\",\"revenue\":\"$0.00\",\"cost\":\"$0.36\",\"profit\":\"-$0.36\",\"status\":\"Active\",\"lagging\":false,\"timestamp\":1516433084}';
   
   // 設定したjsonを出力します
   return ContentService.createTextOutput(ZenyJson).setMimeType(ContentService.MimeType.JSON);
