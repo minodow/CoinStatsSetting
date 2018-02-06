@@ -15,3 +15,7 @@ YTNを使用する場合はAwesome MinerのOptionでYescryptR16というアル�
 
 ZNY.gs
 BitZeny(ZNY)の情報を取得するスクリプトです。
+
+CryptoHubCoins.gs
+CryptoHubに登録されているすべてのコインの情報を取得できるスクリプトです。価格はCryptoHubのマーケットから取得します。URLに "?code=NMD" のようにコインの短縮名をパラメーターとして設定してください。
+
