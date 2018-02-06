@@ -10,29 +10,24 @@ function getJson(url) {
 
 
 function doGet(){
-  var blockReward = 250;
   
   // 採掘難易度を取得します。
-  var diff = getZenyDiff();
+  var diff = getYtnDiff();
   
-  // ブロック数を取得します。
-  var blockCount = getZenyBlockCount();
-  
-  var step;
-  
-  for (step = 0; step < Math.floor(blockCount / 500000); step++) {
-    blockReward = blockReward / 2;
-  }
-  
-  // 価格を取得します。
-  var price = getSEMarketInfo("ZNY", "BTC", "buy");
+  // kakakuを取得します。
+  var price = getSEMarketInfo("YTN", "BTC", "buy");
   
   // whattomine形式のjson作成
-  var ZenyJson = '{\"id\":998,\"name\":\"BitZeny\",\"tag\":\"ZNY\",\"algorithm\":\"Yescrypt\",\"block_time\":\"90.0\",\"block_reward\":' + blockReward + ',\"block_reward24\":' + blockReward + ',\"block_reward3\":' + blockReward + ',\"block_reward7\":' + blockReward + ',\"last_block\":' + blockCount + ',\"difficulty\":' + diff + ',\"difficulty24\":' + diff + ',\"difficulty3\":' + diff + ',\"difficulty7\":' + diff + ',\"nethash\":17285206474,\"exchange_rate\":' + price + ',\"exchange_rate24\":' + price + ',\"exchange_rate3\":' + price + ',\"exchange_rate7\":' + price + ',\"exchange_rate_vol\":0,\"exchange_rate_curr\":\"BTC\",\"market_cap\":\"$0\",\"pool_fee\":\"0.000000\",\"estimated_rewards\":\"13.734687\",\"btc_revenue\":\"0.00000000\",\"revenue\":\"$0.00\",\"cost\":\"$0.36\",\"profit\":\"-$0.36\",\"status\":\"Active\",\"lagging\":false,\"timestamp\":1516433084}';
+  var ytnJson = '{\"id\":999,\"name\":\"Yenten\",\"tag\":\"YTN\",\"algorithm\":\"YescryptR16\",\"block_time\":\"120.0\",\"block_reward\":50,\"block_reward24\":50,\"block_reward3\":50,\"block_reward7\":50,\"last_block\":141606,\"difficulty\":' + diff + ',\"difficulty24\":' + diff + ',\"difficulty3\":' + diff + ',\"difficulty7\":' + diff + ',\"nethash\":17285206474,\"exchange_rate\":' + price + ',\"exchange_rate24\":' + price + ',\"exchange_rate3\":' + price + ',\"exchange_rate7\":' + price + ',\"exchange_rate_vol\":0,\"exchange_rate_curr\":\"BTC\",\"market_cap\":\"$0\",\"pool_fee\":\"0.000000\",\"estimated_rewards\":\"13.734687\",\"btc_revenue\":\"0.00000000\",\"revenue\":\"$0.00\",\"cost\":\"$0.36\",\"profit\":\"-$0.36\",\"status\":\"Active\",\"lagging\":false,\"timestamp\":1516433084}';
   
   // 設定したjsonを出力します
-  return ContentService.createTextOutput(ZenyJson).setMimeType(ContentService.MimeType.JSON);
+  return ContentService.createTextOutput(ytnJson).setMimeType(ContentService.MimeType.JSON);
 }
+
+
+
+
+
 
 //1.    buy (highest buy)
 //2.    sell (lowest sell)
@@ -40,7 +35,7 @@ function doGet(){
 //4.    updated time
 //5.    server time
 function getSEMarketInfo(coin1, coin2, contents){
-  try{
+    try{
     var url = "https://stocks.exchange/api2/prices";
     
     var json = getJson(url);
@@ -56,32 +51,20 @@ function getSEMarketInfo(coin1, coin2, contents){
   }
 }
 
-// ZenyのDIFFを取得します。
-function getZenyDiff(){
+// YTNのDIFFを取得します。
+function getYtnDiff(){
   try{
-    var url = "http://namuyan.dip.jp/MultiLightBlockExplorer/apis.php?data=zeny/api/status?q=getDifficulty";
+    var url = "http://yenten-blockexplorer.chocottokozukai.click/api/getdifficulty";
     
-    var json = getJson(url);
-    
-    return Number(json.difficulty);
-  }
-  catch(e){
-    return 0;
-  }
-}
-
-
-http://namuyan.dip.jp/MultiLightBlockExplorer/apis.php?data=zeny/api/status?q=getBlockCount
-
-
-// ZenyのBlockCountを取得します。
-function getZenyBlockCount(){
-  try{
-    var url = "http://namuyan.dip.jp/MultiLightBlockExplorer/apis.php?data=zeny/api/status?q=getBlockCount";
-    
-    var json = getJson(url);
-    
-    return Number(json.blockcount);
+    var url2 = "http://explorer.yenten.lolpool.club/api/getdifficulty";
+    var json;
+    try{
+      json = getJson(url);
+    }
+    catch(e){
+      json = getJson(url2);
+    }
+    return Number(json);
   }
   catch(e){
     return 0;
