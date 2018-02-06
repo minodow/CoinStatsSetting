@@ -70,10 +70,6 @@ function getZenyDiff(){
   }
 }
 
-
-http://namuyan.dip.jp/MultiLightBlockExplorer/apis.php?data=zeny/api/status?q=getBlockCount
-
-
 // ZenyのBlockCountを取得します。
 function getZenyBlockCount(){
   try{
