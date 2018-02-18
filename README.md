@@ -23,6 +23,9 @@ BitZeny(ZNY)の情報を取得するスクリプトです。
 
 * CryptoHubCoins.gs  
 CryptoHubに登録されているすべてのコインの情報を取得できるスクリプトです。価格はCryptoHubのマーケットから取得します。URLに "?code=NMD" のようにコインの短縮名をパラメーターとして設定してください。
+このファイルを使用する場合はFutionTablesAPIの設定が必要です。以下のリンクを参考に設定してください。
+
+https://qiita.com/U11/items/c4d9632715b016bef8ee#_reference-45765bb2a0c8ce358f5b
 
 ## 寄付
 * Yenten : YfsPeLb75pVoP9qmuCGRaJmzHmAUA7RXp4
