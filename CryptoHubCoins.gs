@@ -37,6 +37,10 @@ function doGet(e){
   
   // コインのアルゴリズムの取得(先頭大文字)
   var algo = matchData[0].algo.charAt(0).toUpperCase() + matchData[0].algo.slice(1);
+  
+  if(algo == "Blake2s"){
+    algo = "Blake 2s";
+  }
 
   // 価格を取得します。
   var price = 0;
