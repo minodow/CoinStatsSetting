@@ -14,6 +14,11 @@ function getJson(url) {
 function doGet(e){
   try{
     var code = e.parameters.code;
+    var avg = e.parameters.avg;
+    
+    if(!avg){
+      avg =24;
+    }
     
     Logger.log('通貨名称 "%s"', code);
     
@@ -64,7 +69,7 @@ function doGet(e){
     Logger.log('価格 "%s"', price);
     
     // 24時間平均のデータを取得します。
-    var result = getCoinDetail(code);
+    var result = getCoinDetail(code, avg);
     
     // 24時間平均のdiffを取得します。
     var diff24 = getCoinDiff24(result, diff);
@@ -161,13 +166,14 @@ function getCoinNames(){
 }
 
 // 指定したコインの詳細データを取得します。
-function getCoinDetail(coinID){
+function getCoinDetail(coinID, avg){
   var tableId = getCoinDetailTableId();
   
   var date = new Date();
   var nowStr = Utilities.formatDate( date, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss');
   
-  date.setDate(date.getDate() - 1);
+  //date.setDate(date.getDate() - 1);
+  date.setHours(date.getHours() - avg);
   var oldStr = Utilities.formatDate( date, 'Asia/Tokyo', 'yyyy/MM/dd HH:mm:ss');
   
   var sql = "SELECT * FROM " + tableId + " WHERE CoinID = \'" + coinID + "\'"
