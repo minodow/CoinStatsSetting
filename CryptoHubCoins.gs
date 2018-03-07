@@ -30,6 +30,31 @@ function doGet(e){
       if (item.code == code) return true;
     });
     
+    if(code == "POLY"){
+      var poly = new Object();
+      poly.block_reward = 300;
+      poly.difficulty = getPolyDiff();
+      poly.block_height = 10000;
+      poly.net_hashrate = 0;
+      poly.pool_hashrate = 0;
+      poly.name = "polytimos";
+      poly.algo = "polytimos";
+      poly.market = true;
+      matchData.unshift(poly);
+    }
+    else if(code == "XHM"){
+      var poly = new Object();
+      poly.block_reward = 240;
+      poly.difficulty = getXhmDiff();
+      poly.block_height = 10000;
+      poly.net_hashrate = 0;
+      poly.pool_hashrate = 0;
+      poly.name = "Xhimera";
+      poly.algo = "xevan";
+      poly.market = true;
+      matchData.unshift(poly);
+    }
+    
     var blockReward = matchData[0].block_reward;
     
     Logger.log('ブロック報酬 "%s"', blockReward);
@@ -63,7 +88,13 @@ function doGet(e){
     // 価格を取得します。
     var price = 0;
     if(matchData[0].market){
-      price = getCryptohubMarketInfo("BTC", code, "last");
+      if(code == "XHM"){
+        // XHMの場合Graviexから価格を取得します。
+        price = getGraviexMarketInfo("xhm", "btc", "last");
+      }
+      else{
+        price = getCryptohubMarketInfo("BTC", code, "last");
+      }
     }
     
     Logger.log('価格 "%s"', price);
@@ -104,7 +135,39 @@ function getCryptohubMarketInfo(coin1, coin2, contents){
   }
 }
 
+function getPolyDiff(){
+  try{
+    var url = "https://explorer.polytimos.net/api/getdifficulty";
+    
+    var json = getJson(url);
+    
+    return Number(json["proof-of-work"]);
+  }
+  catch(e){
+    Logger.log(e);
+    return 0;
+  }
+}
 
+function getXhmDiff(){
+  try{
+    var url = "https://xhimera.info/api/getdifficulty";
+    
+    var response = UrlFetchApp.fetch(url);
+  
+    Logger.log('URLアクセス "%s"', url);
+    
+    var diff = Number(response.getContentText());
+    
+    Logger.log('DIFF "%s"', diff);
+    
+    return Number(diff);
+  }
+  catch(e){
+    Logger.log(e);
+    return 0;
+  }
+}
 
 
 
@@ -130,14 +193,45 @@ function getCoinHistory(){
     var matchData = poolJson.pools.filter(function(item, index2){
       if (item.code == coins[index]) return true;
     });
-  
+    
+    if(coins[index] == "POLY"){
+      var poly = new Object();
+      poly.block_reward = 300;
+      poly.difficulty = getPolyDiff();
+      poly.block_height = 10000;
+      poly.net_hashrate = 0;
+      poly.pool_hashrate = 0;
+      poly.name = "polytimos";
+      poly.algo = "polytimos";
+      poly.market = true;
+      matchData.unshift(poly);
+    }
+    else if(coins[index] == "XHM"){
+      var poly = new Object();
+      poly.block_reward = 240;
+      poly.difficulty = getXhmDiff();
+      poly.block_height = 10000;
+      poly.net_hashrate = 0;
+      poly.pool_hashrate = 0;
+      poly.name = "Xhimera";
+      poly.algo = "xevan";
+      poly.market = true;
+      matchData.unshift(poly);
+    }
+    
     // diffを取得します。  
     var diff = matchData[0].difficulty;
     
     // 価格を取得します。
     var price = 0;
     if(matchData[0].market){
-      price = getCryptohubMarketInfo("BTC", coins[index], "last");
+        if(coins[index] == "XHM"){
+          // XHMの場合Graviexから価格を取得します。
+          price = getGraviexMarketInfo("xhm", "btc", "last");
+      }
+      else{
+        price = getCryptohubMarketInfo("BTC", coins[index], "last");
+      }
     }
     
     Logger.log('コイン "%s" diff "%s" 価格 "%s"', coins[index], diff, price.toFixed(8));
@@ -283,4 +377,54 @@ function getCoinTableId(){
 
 function getCoinDetailTableId(){
   return '1OKjP-_3m-TPmQmKEAKjCdcwaO8JrMFLTSSAyuuW-';
+}
+
+
+function fakeGet() {
+  var eventObject = 
+    {
+      "parameters": {
+        "code": "POLY",
+        "avg": "3"
+      },
+      "contextPath": "",
+      "contentLength": -1,
+      "queryString": "action=view&page=3",
+      "parameter": {
+        "action": ["view"],
+        "page": ["3"]
+      }
+    }
+  var result = doGet(eventObject);
+  
+  Logger.log(result);
+  
+}
+
+// Graviexの価格データを取得します。
+// URL sample https://graviex.net//api/v2/tickers/xhmbtc.json
+// json sample {"at":1520314357,"ticker":{"buy":"0.000002004","sell":"0.000003498","low":"0.000001123","high":"0.00000495","last":"0.000002001","vol":"464494.862","volbtc":"1.2462979485956","change":"-0.555333333"}}
+function getGraviexMarketInfo(coin1, coin2, contents){
+  try{
+    var url = "https://graviex.net//api/v2/tickers/" + coin1.toLowerCase() + coin2.toLowerCase() + ".json";
+    
+    var json = getJson(url);
+      
+    return Number(json.ticker[contents]);
+  }
+  catch(e){
+    Logger.log(e);
+    return 0;
+  }
+}
+
+
+function getGraviexMarketInfoTest(){
+  
+  var test = getGraviexMarketInfo("xhm", "btc", "last");
+  
+  Logger.log(test);
+  
+  return test;
+  
 }
