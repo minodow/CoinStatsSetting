@@ -27,6 +27,26 @@ CryptoHubに登録されているすべてのコインの情報を取得でき�
 
 https://qiita.com/U11/items/c4d9632715b016bef8ee#_reference-45765bb2a0c8ce358f5b
 
+## 対応通貨一覧
+
+* XLR
+* YTN
+* ZNY
+* BZL
+* HONEY
+* NNC
+* MAX
+* NMD
+* PLSR
+* POLY
+* ERA
+* ELP
+* INFO
+* XHM
+
+
+
+
 ## 寄付
 * Yenten : YfsPeLb75pVoP9qmuCGRaJmzHmAUA7RXp4
 * Mona : MGmfU9odzSJ7JE2bjt7gNGTHcXGBcQoatm
