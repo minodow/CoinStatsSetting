@@ -92,7 +92,13 @@ function doGet(e){
         // XHMの場合Graviexから価格を取得します。
         price = getGraviexMarketInfo("xhm", "btc", "last");
       }
-      else{
+      else if(code == "NMD")
+      {
+        // NMDの場合CoinExchangeから価格を取得します。
+        price = getCoeMarketInfo("NMD","BTC", "BidPrice");
+      }
+      else
+      {
         price = getCryptohubMarketInfo("BTC", code, "last");
       }
     }
@@ -225,9 +231,14 @@ function getCoinHistory(){
     // 価格を取得します。
     var price = 0;
     if(matchData[0].market){
-        if(coins[index] == "XHM"){
-          // XHMの場合Graviexから価格を取得します。
-          price = getGraviexMarketInfo("xhm", "btc", "last");
+      if(coins[index] == "XHM"){
+        // XHMの場合Graviexから価格を取得します。
+        price = getGraviexMarketInfo("xhm", "btc", "last");
+      }
+      else if(code == "NMD")
+      {
+        // NMDの場合CoinExchangeから価格を取得します。
+        price = getCoeMarketInfo("NMD","BTC", "BidPrice");
       }
       else{
         price = getCryptohubMarketInfo("BTC", coins[index], "last");
@@ -427,4 +438,24 @@ function getGraviexMarketInfoTest(){
   
   return test;
   
+}
+
+function getCoeMarketInfo(coin1, coin2, contents){
+  try{
+    var marketsUrl = "https://www.coinexchange.io/api/v1/getmarkets";
+    var summaryUrl = "https://www.coinexchange.io/api/v1/getmarketsummary?market_id=";
+    
+    var marketsJson = getJson(marketsUrl);
+    
+    var matchData = marketsJson.result.filter(function(item, index){
+      if (item.MarketAssetCode == coin1 && item.BaseCurrencyCode == coin2) return true;
+    });
+    
+    var json2 = getJson(summaryUrl + matchData[0].MarketID);
+    return  Number(json2.result[contents]);
+  }
+  catch(e){
+    Logger.log(e);
+    return 0;
+  }
 }
