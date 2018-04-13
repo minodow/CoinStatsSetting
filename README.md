@@ -11,9 +11,6 @@ AwesomeMinerでこのスクリプトを使用し、収益予測やプール切�
 
 ## ファイル一覧
 
-* XLR.gs  
-Solaris(XLR)の情報を取得するスクリプトです。
-
 * YTN.gs  
 Yenten(YTN)の情報を取得するスクリプトです。
 YTNを使用する場合はAwesome MinerのOptionでYescryptR16というアルゴリズムを追加しておいてください。
