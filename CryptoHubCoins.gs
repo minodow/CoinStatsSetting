@@ -54,6 +54,18 @@ function doGet(e){
       poly.market = true;
       matchData.unshift(poly);
     }
+    else if(code == "RVN"){
+      var poly = new Object();
+      poly.block_reward = 5000;
+      poly.difficulty = getRvnDiff();
+      poly.block_height = getRvnBlockCount();
+      poly.net_hashrate = getRvnNetHash();
+      poly.pool_hashrate = 0;
+      poly.name = "Raven";
+      poly.algo = "x16r";
+      poly.market = true;
+      matchData.unshift(poly);
+    }
     
     var blockReward = matchData[0].block_reward;
     
@@ -155,6 +167,74 @@ function getPolyDiff(){
   }
 }
 
+
+
+function getRvnDiff(){
+  try{
+    var url = "https://rvn.hash4.life/api/getdifficulty";
+    
+    var response = UrlFetchApp.fetch(url);
+  
+    Logger.log('URLアクセス "%s"', url);
+    
+    var diff = Number(response.getContentText());
+    
+    Logger.log('DIFF "%s"', diff);
+    
+    return Number(diff);
+  }
+  catch(e){
+    Logger.log(e);
+    return 0;
+  }
+}
+
+
+
+
+
+function getRvnBlockCount(){
+  try{
+    var url = "https://rvn.hash4.life/api/getblockcount";
+    
+    var response = UrlFetchApp.fetch(url);
+  
+    Logger.log('URLアクセス "%s"', url);
+    
+    var diff = Number(response.getContentText());
+    
+    Logger.log('BlockCount "%s"', diff);
+    
+    return Number(diff);
+  }
+  catch(e){
+    Logger.log(e);
+    return 0;
+  }
+}
+
+
+
+function getRvnNetHash(){
+  try{
+    var url = "https://rvn.hash4.life/api/getnetworkhashps";
+    
+    var response = UrlFetchApp.fetch(url);
+  
+    Logger.log('URLアクセス "%s"', url);
+    
+    var diff = Number(response.getContentText());
+    
+    Logger.log('NetHash "%s"', diff);
+    
+    return Number(diff);
+  }
+  catch(e){
+    Logger.log(e);
+    return 0;
+  }
+}
+
 function getXhmDiff(){
   try{
     var url = "https://xhimera.info/api/getdifficulty";
@@ -224,6 +304,18 @@ function getCoinHistory(){
       poly.market = true;
       matchData.unshift(poly);
     }
+    else if(coins[index] == "RVN"){
+      var poly = new Object();
+      poly.block_reward = 5000;
+      poly.difficulty = getRvnDiff();
+      poly.block_height = getRvnBlockCount();
+      poly.net_hashrate = getRvnNetHash();
+      poly.pool_hashrate = 0;
+      poly.name = "Raven";
+      poly.algo = "x16r";
+      poly.market = true;
+      matchData.unshift(poly);
+    }
     
     // diffを取得します。  
     var diff = matchData[0].difficulty;
@@ -235,7 +327,7 @@ function getCoinHistory(){
         // XHMの場合Graviexから価格を取得します。
         price = getGraviexMarketInfo("xhm", "btc", "last");
       }
-      else if(code == "NMD")
+      else if(coins[index] == "NMD")
       {
         // NMDの場合CoinExchangeから価格を取得します。
         price = getCoeMarketInfo("NMD","BTC", "BidPrice");
