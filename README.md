@@ -29,7 +29,6 @@ https://qiita.com/U11/items/c4d9632715b016bef8ee#_reference-45765bb2a0c8ce358f5b
 
 ## 対応通貨一覧
 
-* XLR
 * YTN
 * ZNY
 * BZL
@@ -37,12 +36,13 @@ https://qiita.com/U11/items/c4d9632715b016bef8ee#_reference-45765bb2a0c8ce358f5b
 * NNC
 * MAX
 * NMD
-* PLSR
 * POLY
 * ERA
 * ELP
 * INFO
 * XHM
+* RVN
+* PGN
 
 
 
